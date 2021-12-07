@@ -5,6 +5,8 @@ import {
   FlatList,
   StyleSheet,
   Alert,
+  Platform,
+  StatusBar,
   SafeAreaView
 } from "react-native";
 import { ListItem } from "react-native-elements";
@@ -15,8 +17,8 @@ export default class HomeScreen extends Component {
     super(props);
     this.state = {
       listData: [],
-      // only local host works for Web..not ngrok link
-      url: "http://localhost:5000/"
+      // only https link of ngrok works..download ngrok from ngrok.com
+      url: "https://3f3b-49-204-114-236.ngrok.io/"
     };
   }
 
@@ -81,8 +83,7 @@ export default class HomeScreen extends Component {
     }
 
     return (
-      <View style={styles.container}>
-        <SafeAreaView />
+      <SafeAreaView style={styles.container}>
         <View style={styles.upperContainer}>
           <Text style={styles.headerText}>Planets World</Text>
         </View>
@@ -93,7 +94,7 @@ export default class HomeScreen extends Component {
             renderItem={this.renderItem}
           />
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -101,7 +102,8 @@ export default class HomeScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#edc988"
+    backgroundColor: "#edc988",
+    marginTop : Platform.OS === 'android'?StatusBar.currentHeight : 0
   },
   upperContainer: {
     height : 80,
