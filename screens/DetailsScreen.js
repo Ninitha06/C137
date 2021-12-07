@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button, Alert } from 'react-native';
+import { View, Text, StyleSheet, Button, Alert,SafeAreaView, Platform,StatusBar } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
 import axios from 'axios';
 
@@ -9,7 +9,7 @@ export default class DetailsScreen extends Component {
     this.state = {
       details: {},
       imagePath: '',
-      url: `http://localhost:5000/planet?name=${this.props.route.params.planet_name}`,
+      url: `https://3f3b-49-204-114-236.ngrok.io/planet?name=${this.props.route.params.planet_name}`,
     };
   }
 
@@ -58,7 +58,10 @@ export default class DetailsScreen extends Component {
     const { details, imagePath } = this.state;
     if (details.specifications) {
       return (
-        <View style={styles.container}>
+         <SafeAreaView style={styles.container}>
+        <View style={styles.upperContainer}>
+          <Text style={styles.headerText}>Planets World</Text>
+        </View>
           <Card>
             <Card.Title>{details.name}</Card.Title>
             <Card.Image source={imagePath} style={{ resizeMode: "contain", width: "100%" }}>
@@ -108,7 +111,7 @@ export default class DetailsScreen extends Component {
               </View>
             
           </Card>
-        </View>
+        </SafeAreaView>
       );
     } else return null;
   }
@@ -117,6 +120,19 @@ export default class DetailsScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#eeecda",
+    marginTop : Platform.OS === 'android'?StatusBar.currentHeight : 0
+  },
+  upperContainer: {
+    height : 80,
+    justifyContent: "center",
+    alignItems: "center",
+     backgroundColor: "#edc988",
+  },
+  headerText: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "#132743"
   },
   cardItem: {
     marginBottom: 10,
